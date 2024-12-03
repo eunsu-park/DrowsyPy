@@ -18,7 +18,8 @@ client.check_connection()
 
 client.check_directory("/home/testuser/test")
 client.check_file_path("/home/testuser/test/tmp.txt")
-client.download(down_source, down_destination, overwrite=False)
+client.download(down_source, down_destination, overwrite=True)
+client.upload(up_source, up_destination, overwrite=True)
 
 client.disconnect()
 
