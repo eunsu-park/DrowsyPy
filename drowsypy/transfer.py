@@ -1,4 +1,5 @@
 import os
+import re
 import tempfile
 import ftplib
 import shutil
@@ -176,6 +177,52 @@ class FTPClient:
                 message = f"check_file_path() : Fail to check file path.\t{e}"
                 print(message)
         return True
+    
+    def get_file_list_in_directory(self, directory:str=None) -> list :
+        """
+        Get file list in directory of FTP.
+
+        Args:
+            directory : str
+                Directory path.
+            pattern : str
+                File name pattern.
+
+        Returns:
+            file_list : list
+                File list.
+        """
+        file_list = []
+        if directory == None :
+            message = "get_file_list_in_directory() : directory missing"
+            print(message)
+            return file_list
+        
+        if not self.check_connection() :
+            return False
+        ftp = self.session
+
+        try :
+            file_list = ftp.nlst(directory)
+            message = f"get_file_list_in_directory() : Get file list in {directory}"
+            print(message)
+        except Exception as e :
+            message = f"get_file_list_in_directory() : Fail to get file list in {directory}\t{e}"
+            print(message)
+        return file_list
+
+        # directory_step = directory.split("/")
+        # ftp.cwd("/")
+        # for step in directory_step :
+        #     try :
+        #         ftp.cwd(step)
+        #     except Exception as e :
+        #         self.logger.error(f"ftp_get_file_list_in_directory() : Fail to change directory\t{e}")
+        #         return None
+        # file_list = ftp.nlst()
+        # if pattern is not None :
+        #     file_list = [file_name for file_name in file_list if re.match(pattern, file_name)]
+        # return file_list
 
     def download(self, source:str=None, destination:str=None, overwrite:bool=False) -> bool :
         """
