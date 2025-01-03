@@ -1,7 +1,7 @@
 import os
 import tempfile
-import ftplib
 import shutil
+import ftplib
 
 
 class FTPClient:
