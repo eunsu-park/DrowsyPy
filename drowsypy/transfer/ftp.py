@@ -1,5 +1,4 @@
 import os
-import re
 import tempfile
 import ftplib
 import shutil
